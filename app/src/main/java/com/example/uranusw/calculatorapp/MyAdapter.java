@@ -1,6 +1,8 @@
 package com.example.uranusw.calculatorapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +17,8 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>
 {
 
-    Context cnx;
-    List<Model> arrayList;
+    private Context cnx;
+    private List<Model> arrayList;
 
     public MyAdapter(Context cnx, List<Model> arrayList)
     {
@@ -39,6 +41,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>
         final Model model = arrayList.get(position);
         holder.name.setText(model.getName());
         holder.num.setText(model.getNum());
+        holder.call.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:" + model.getNum()));
+                cnx.startActivity(callIntent);
+            }
+        });
 
     }
 
